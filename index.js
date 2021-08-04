@@ -31,4 +31,11 @@ async function createCourse(name, author, tags, isPublished, date) {
     
 }
 
+async function getCourses() {
+    const courses = await Course.find()
+    console.log(courses)
+}
+
 createCourse('NodeJS', 'Mosh', ['node','backend'], true)
+
+getCourses()
