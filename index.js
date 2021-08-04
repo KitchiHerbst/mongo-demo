@@ -26,13 +26,11 @@ async function createCourse(name, author, tags, isPublished, date) {
     })
     
     const result = await course.save()
-    
-    console.log(result)
-    
 }
 
 async function getCourses() {
-    const courses = await Course.find()
+    const courses = await Course
+        .find({author: 'Mosh'})
     console.log(courses)
 }
 
