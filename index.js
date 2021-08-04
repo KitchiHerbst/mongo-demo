@@ -16,12 +16,13 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model('Course', courseSchema)
 
-async function createCourse(name, author, tags, isPublished) {
+async function createCourse(name, author, tags, isPublished, date) {
     const course = new Course({
         name: name,
         author: author,
         tags: tags,
-        isPublished: isPublished
+        isPublished: isPublished,
+        date: date
     })
     
     const result = await course.save()
