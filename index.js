@@ -16,6 +16,7 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model('Course', courseSchema)
 
+
 async function createCourse(name, author, tags, isPublished, date) {
     const course = new Course({
         name: name,
@@ -31,9 +32,13 @@ async function createCourse(name, author, tags, isPublished, date) {
 async function getCourses() {
     const courses = await Course
         .find({author: 'Mosh'})
+        .limit(1)
+        .sort({name: 1})
     console.log(courses)
 }
 
-createCourse('NodeJS', 'Mosh', ['node','backend'], true)
+createCourse('React', 'Mosh', ['react','frontend'], true)
+createCourse('Node', 'Mosh', ['node','backend'], true)
+createCourse('express', 'Mosh', ['node','backend'], true)
 
 getCourses()
