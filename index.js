@@ -48,9 +48,15 @@ async function getCourses() {
     // .or([ {author: 'Mosh'}, {isPublished: true} ])
     // .and([ {}, {}])
 
+    // REGEX // 
+    // ^ (starts with, goes before) /^Triston/
+    // $ (ends with, goes after) /Herbst$/
+    // i (denotes case insensitivity) /TrIsToN/i
+    // .* (zero or more characters) /.*ton.*/ (zero or more characters before and after)
 
     const courses = await Course
-        .find({author: 'Mosh'})
+        // .find({author: 'Mosh'})
+        .find({ author: /^Mosh/ })
         .limit(3)
         .sort({name: 1})
         .select({name: 1, tags: 1})
