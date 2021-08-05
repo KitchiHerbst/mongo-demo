@@ -30,6 +30,7 @@ async function createCourse(name, author, tags, isPublished, date) {
 }
 
 async function getCourses() {
+    // comparison operators
     // $eq (equal to)
     // $ne (not equal to)
     // $gt (greater than)
@@ -40,6 +41,12 @@ async function getCourses() {
     // $nin (not included in an array)
     // .find({price: { $gte: 10 } }) finding objects with a price of 10 or higher
     // .find({price: { $in: [5,10,20] } }) finding objects with prices of 5 10 and 20
+
+    // logical operators
+    // .or() both are arrays of objects
+    // .and()
+    // .or([ {author: 'Mosh'}, {isPublished: true} ])
+    // .and([ {}, {}])
 
 
     const courses = await Course
