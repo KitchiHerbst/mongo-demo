@@ -29,9 +29,10 @@ async function getCourses1() {
 
 async function getCourses2(){
     const courses = await Course
-        .find({isPublished: true})
+        .find({isPublished: true })
+        .or([{tags: 'frontend'}, {tags: 'backend'}])
         .sort({price: -1})
-        .select({name: 1, author: 1, price: 1})
+        .select('name author price')
     console.log(courses)
 }
 
