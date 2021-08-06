@@ -19,6 +19,14 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model("Course", courseSchema);
 
+async function deleteCourse(id) {
+  await Course.deleteOne({_id: id})
+
+}
+
+deleteCourse('5a68fdf95db93f6477053ddd')
+
+
 async function updateCourse(id) {
   const course = await Course.findById(id)
   if (!course) return;
@@ -30,7 +38,7 @@ async function updateCourse(id) {
   console.log(result)
 }
 
-updateCourse('5a68fdf95db93f6477053ddd')
+// updateCourse('5a68fdf95db93f6477053ddd')
 
 // async function getCourses1() {
 //   const courses = await Course.find({ isPublished: true, tags: "backend" })
