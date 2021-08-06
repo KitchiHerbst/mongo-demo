@@ -20,15 +20,14 @@ const courseSchema = new mongoose.Schema({
 const Course = mongoose.model("Course", courseSchema);
 
 async function updateCourse(id) {
-  const c = await Course.findById(id)
-  console.log(c)
-  // if (!course) return;
+  const course = await Course.findById(id)
+  if (!course) return;
 
-  // course.set({isPublished: true, author:'different author'})
+  course.set({isPublished: true, author:'Mosh'})
 
-  // const result = await course.save()
+  const result = await course.save()
 
-  // console.log(result)
+  console.log(result)
 }
 
 updateCourse('5a68fdf95db93f6477053ddd')
