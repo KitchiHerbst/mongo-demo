@@ -7,24 +7,44 @@ mongoose
   .catch((err) => console.log(err));
 
 const courseSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
+  _id: {type: String, required: true},
+  name: {type: String, required: true},
   tags: [String],
   date: { type: Date, default: Date.now },
-  author: String,
+  author: {type: String, required: true},
   isPublished: Boolean,
-  price: Number,
+  price: Number, 
   // __v: Number,
 });
 
 const Course = mongoose.model("Course", courseSchema);
+
+async function createCourse(name, tags, date, author, isPublished, price){
+  const course = new Course({
+    name: name,
+    tags: tags,
+    date: date,
+    author: author,
+    isPublished: isPublished,
+    price: price
+  })
+
+  try{
+    const result = await course.save()
+    console.log(result)
+  }
+  catch(ex){
+    console.log(ex)
+  }
+}
+
+
 
 async function deleteCourse(id) {
   await Course.deleteOne({_id: id})
 
 }
 
-deleteCourse('5a68fdf95db93f6477053ddd')
 
 
 async function updateCourse(id) {
@@ -65,3 +85,7 @@ async function updateCourse(id) {
 // }
 
 // getCourses3();
+
+createCourse()
+
+// deleteCourse('5a68fdf95db93f6477053ddd')
