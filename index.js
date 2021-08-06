@@ -7,13 +7,13 @@ mongoose
   .catch((err) => console.log(err));
 
 const courseSchema = new mongoose.Schema({
-  _id: {type: String, required: true},
-  name: {type: String, required: true},
+  _id:  String,
+  name: {type: String, required: true, minlength: 2},
   tags: [String],
   date: { type: Date, default: Date.now },
   author: {type: String, required: true},
   isPublished: Boolean,
-  price: Number, 
+  price: {type: Number, required: function() {return this.isPublished}}, 
   // __v: Number,
 });
 
@@ -34,14 +34,19 @@ async function createCourse(name, tags, date, author, isPublished, price){
     console.log(result)
   }
   catch(ex){
-    console.log(ex)
+    console.log(ex.message)
   }
 }
 
 
 
 async function deleteCourse(id) {
-  await Course.deleteOne({_id: id})
+  try{
+    await Course.deleteOne({_id: id})
+  }
+  catch(ex){
+    console.log(ex.message)
+  }
 
 }
 
@@ -86,6 +91,6 @@ async function updateCourse(id) {
 
 // getCourses3();
 
-createCourse()
+createCourse('REact',['front-end', 'javascript'], Date.now, 'Mosh', true )
 
 // deleteCourse('5a68fdf95db93f6477053ddd')
