@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 
+
 mongoose
   .connect("mongodb://localhost/mongo-exercises")
   .then(() => console.log("connected to mongo-exercises"))
   .catch((err) => console.log(err));
 
 const courseSchema = new mongoose.Schema({
+  _id: String,
   name: String,
   tags: [String],
   date: { type: Date, default: Date.now },
@@ -17,32 +19,42 @@ const courseSchema = new mongoose.Schema({
 
 const Course = mongoose.model("Course", courseSchema);
 
-async function updateCourse(id){
-  
+async function updateCourse(id) {
+  const c = await Course.findById(id)
+  console.log(c)
+  // if (!course) return;
+
+  // course.set({isPublished: true, author:'different author'})
+
+  // const result = await course.save()
+
+  // console.log(result)
 }
 
-async function getCourses1() {
-  const courses = await Course.find({ isPublished: true, tags: "backend" })
-    .sort({ name: 1 })
-    .select({ name: 1, author: 1 });
+updateCourse('5a68fdf95db93f6477053ddd')
 
-  console.log(courses);
-}
+// async function getCourses1() {
+//   const courses = await Course.find({ isPublished: true, tags: "backend" })
+//     .sort({ name: 1 })
+//     .select({ name: 1, author: 1 });
 
-async function getCourses2() {
-  const courses = await Course.find({ isPublished: true })
-    .or([{ tags: "frontend" }, { tags: "backend" }])
-    .sort({ price: -1 })
-    .select("name author price");
-  console.log(courses);
-}
+//   console.log(courses);
+// }
 
-async function getCourses3() {
-  const courses = await Course.find().or([
-    { price: { $gte: 15 } },
-    { name: /.*by.*/ },
-  ]);
-  console.log(courses)
-}
+// async function getCourses2() {
+//   const courses = await Course.find({ isPublished: true })
+//     .or([{ tags: "frontend" }, { tags: "backend" }])
+//     .sort({ price: -1 })
+//     .select("name author price");
+//   console.log(courses);
+// }
+
+// async function getCourses3() {
+//   const courses = await Course.find().or([
+//     { price: { $gte: 15 } },
+//     { name: /.*by.*/ },
+//   ]);
+//   console.log(courses)
+// }
 
 // getCourses3();
