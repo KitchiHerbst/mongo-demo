@@ -1,66 +1,65 @@
 const mongoose = require("mongoose");
 
-
 mongoose
   .connect("mongodb://localhost/mongo-exercises")
   .then(() => console.log("connected to mongo-exercises"))
   .catch((err) => console.log(err));
 
 const courseSchema = new mongoose.Schema({
-  _id:  String,
-  name: {type: String, required: true, minlength: 2},
+  _id: String,
+  name: { type: String, required: true, minlength: 2 },
   tags: [String],
   date: { type: Date, default: Date.now },
-  author: {type: String, required: true},
+  author: { type: String, required: true },
   isPublished: Boolean,
-  price: {type: Number, required: function() {return this.isPublished}}, 
+  price: {
+    type: Number,
+    required: function () {
+      return this.isPublished;
+    },
+    get: v => Math.round(v),
+    set: v => Math.round(v)
+  },
   // __v: Number,
 });
 
 const Course = mongoose.model("Course", courseSchema);
 
-async function createCourse(name, tags, date, author, isPublished, price){
+async function createCourse(name, tags, date, author, isPublished, price) {
   const course = new Course({
     name: name,
     tags: tags,
     date: date,
     author: author,
     isPublished: isPublished,
-    price: price
-  })
+    price: price,
+  });
 
-  try{
-    const result = await course.save()
-    console.log(result)
-  }
-  catch(ex){
-    console.log(ex.message)
+  try {
+    const result = await course.save();
+    console.log(result);
+  } catch (ex) {
+    console.log(ex.message);
   }
 }
-
-
 
 async function deleteCourse(id) {
-  try{
-    await Course.deleteOne({_id: id})
+  try {
+    await Course.deleteOne({ _id: id });
+  } catch (ex) {
+    console.log(ex.message);
   }
-  catch(ex){
-    console.log(ex.message)
-  }
-
 }
 
-
-
 async function updateCourse(id) {
-  const course = await Course.findById(id)
+  const course = await Course.findById(id);
   if (!course) return;
 
-  course.set({isPublished: true, author:'Mosh'})
+  course.set({ isPublished: true, author: "Mosh" });
 
-  const result = await course.save()
+  const result = await course.save();
 
-  console.log(result)
+  console.log(result);
 }
 
 // updateCourse('5a68fdf95db93f6477053ddd')
@@ -91,6 +90,6 @@ async function updateCourse(id) {
 
 // getCourses3();
 
-createCourse('REact',['front-end', 'javascript'], Date.now, 'Mosh', true )
+createCourse("REact", ["front-end", "javascript"], Date.now, "Mosh", true);
 
 // deleteCourse('5a68fdf95db93f6477053ddd')
